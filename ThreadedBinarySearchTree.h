@@ -2,15 +2,15 @@
 #define THREADED_BINARY_SEARCH_TREE_H
 
 template <class KeyType>
-class ThreadedBST {
+class ThreadedBSTNode {
 public:
     KeyType key;
-    ThreadedBST* left;
-    ThreadedBST* right;
+    ThreadedBSTNode* left;
+    ThreadedBSTNode* right;
     bool leftThread;
     bool rightThread;
 
-    ThreadedBST(const KeyType& newKey)
+    ThreadedBSTNode(const KeyType& newKey)
         : key(newKey), left(nullptr), right(nullptr),
           leftThread(false), rightThread(false) {}
 };
@@ -18,7 +18,7 @@ public:
 template <class KeyType>
 class ThreadedBST {
 private:
-    ThreadedBST<KeyType>* root;
+    ThreadedBSTNode<KeyType>* root;
 
 public:
     ThreadedBST() : root(nullptr) {}
@@ -33,13 +33,13 @@ public:
     // Inorder traversal iterator
     class InorderIterator {
     private:
-        ThreadedBST<KeyType>* current;
+        ThreadedBSTNode<KeyType>* current;
 
-        ThreadedBST<KeyType>* findLeftMost(ThreadedBST<KeyType>* node);
-        ThreadedBST<KeyType>* findRightMost(ThreadedBST<KeyType>* node);
+        ThreadedBSTNode<KeyType>* findLeftMost(ThreadedBSTNode<KeyType>* node);
+        ThreadedBSTNode<KeyType>* findRightMost(ThreadedBSTNode<KeyType>* node);
 
     public:
-        InorderIterator(ThreadedBST<KeyType>* root);
+        InorderIterator(ThreadedBSTNode<KeyType>* root);
 
         KeyType operator*();
         InorderIterator& operator++();
@@ -51,9 +51,9 @@ public:
     InorderIterator end();
 
 private:
-    void clear(ThreadedBST<KeyType>* node);
-    ThreadedBST<KeyType>* insert(ThreadedBST<KeyType>* node, const KeyType& key);
-    ThreadedBST<KeyType>* remove(ThreadedBST<KeyType>* node, const KeyType& key);
+    void clear(ThreadedBSTNode<KeyType>* node);
+    ThreadedBSTNode<KeyType>* insert(ThreadedBSTNode<KeyType>* node, const KeyType& key);
+    ThreadedBSTNode<KeyType>* remove(ThreadedBSTNode<KeyType>* node, const KeyType& key);
 };
 
 #endif // THREADED_BINARY_SEARCH_TREE_H
