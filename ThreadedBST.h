@@ -33,6 +33,9 @@ private:
 
 public:
     // Constructors and destructor
+    ThreadedBST();
+    ThreadedBST(const ThreadedBST<ItemType>& tree);
+    ~ThreadedBST();
 
     // Public methods for inserting, deleting, and traversing the tree
     void insert(const ItemType& newEntry);
@@ -46,3 +49,4 @@ private:
 
 #include "ThreadedBST.cpp"
 #endif
+
