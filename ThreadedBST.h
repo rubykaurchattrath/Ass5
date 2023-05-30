@@ -39,6 +39,7 @@ public:
 
     // Public methods for inserting, deleting, and traversing the tree
     void insert(const ItemType& newEntry);
+    void deleteItem(const ItemType& target);
     void inorderTraversal() const;
 
 private:
