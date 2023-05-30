@@ -4,6 +4,8 @@
 #ifndef _THREADED_BINARY_SEARCH_TREE
 #define _THREADED_BINARY_SEARCH_TREE
 
+#include <ostream>
+
 template <class ItemType>
 class ThreadedBST {
 private:
@@ -44,6 +46,11 @@ public:
     void insert(const ItemType& newEntry);
     void deleteItem(const ItemType& target);
     void inorderTraversal() const;
+    
+    // Operator overloads
+    template <class T>
+    friend std::ostream& operator<<(std::ostream& os, const ThreadedBST<T>& tree);
+
 
 private:
     // Helper methods
