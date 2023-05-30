@@ -69,3 +69,91 @@ void testThreadedBST(int n) {
     }
     cout << endl;
 }
+
+// Test Method 1: Test basic functionality and insertion order
+void test1() {
+    cout << "Test 1" << endl;
+    ThreadedBST<int> bst;
+
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(15);
+    bst.insert(3);
+    bst.insert(7);
+    bst.insert(12);
+    bst.insert(20);
+
+    cout << "Inorder traversal: ";
+    for (auto it = bst.begin(); it != bst.end(); ++it) {
+        cout << *it << " ";
+    }
+    cout << endl;
+}
+
+// Test Method 2: Test removal of nodes
+void test2() {
+    cout << "Test 2" << endl;
+    ThreadedBST<int> bst;
+
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(15);
+    bst.insert(3);
+    bst.insert(7);
+    bst.insert(12);
+    bst.insert(20);
+
+    bst.remove(7);
+    bst.remove(15);
+
+    cout << "Inorder traversal: ";
+    for (auto it = bst.begin(); it != bst.end(); ++it) {
+        cout << *it << " ";
+    }
+    cout << endl;
+}
+
+// Test Method 3: Test finding nodes
+void test3() {
+    cout << "Test 3" << endl;
+    ThreadedBST<int> bst;
+
+    bst.insert(10);
+    bst.insert(5);
+    bst.insert(15);
+    bst.insert(3);
+    bst.insert(7);
+    bst.insert(12);
+    bst.insert(20);
+
+    auto it1 = bst.find(7);
+    if (it1 != bst.end()) {
+        cout << "Found: " << *it1 << endl;
+    } else {
+        cout << "Not Found" << endl;
+    }
+
+    auto it2 = bst.find(8);
+    if (it2 != bst.end()) {
+        cout << "Found: " << *it2 << endl;
+    } else {
+        cout << "Not Found" << endl;
+    }
+}
+
+int main(int argc, char** argv) {
+    if (argc != 2) {
+        cout << "Usage: ./program_name <number_of_nodes>" << endl;
+        return 1;
+    }
+
+    int n = atoi(argv[1]);
+
+    test1();
+    test2();
+    test3();
+
+    testThreadedBST(n);
+
+    return 0;
+}
