@@ -5,6 +5,7 @@
 #define _THREADED_BINARY_SEARCH_TREE
 
 #include <ostream>
+using namespace std;
 
 template <class ItemType>
 class ThreadedBST {
@@ -48,9 +49,8 @@ public:
     void inorderTraversal() const;
     
     // Operator overloads
-    template <class T>
-    friend std::ostream& operator<<(std::ostream& os, const ThreadedBST<T>& tree);
-
+    template <class ItemType>
+    friend ostream& operator<<(ostream& os, const ThreadedBST<ItemType>& tree);
 
 private:
     // Helper methods
