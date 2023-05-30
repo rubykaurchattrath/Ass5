@@ -1,3 +1,6 @@
+// Jasjeen Khosa and Ruby Kaur
+// CSS 342
+
 #ifndef _THREADED_BINARY_SEARCH_TREE
 #define _THREADED_BINARY_SEARCH_TREE
 
