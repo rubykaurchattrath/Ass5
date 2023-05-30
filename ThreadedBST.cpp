@@ -3,6 +3,7 @@
 
 #include "ThreadedBST.h"
 #include <iostream>
+using namespace std;
 
 // Constructor
 template<class ItemType>
@@ -54,14 +55,16 @@ void ThreadedBST<ItemType>::deleteItem(const ItemType& target) {
  * Performs an inorder traversal of the threaded bst
  * and outputs the items in ascending order.
  */
+// Performs an inorder traversal of the threaded bst
+// and outputs the items to the given ostream.
 template<class ItemType>
-void ThreadedBST<ItemType>::inorderTraversal() const {
+void ThreadedBST<ItemType>::inorderTraversal(std::ostream& os) const {
     // Start from the leftmost node of the tree
     BinaryNode* current = findLeftmostNode(rootPtr);
 
     while (current != nullptr) {
         // Output the item in the current node
-        std::cout << current->getItem() << " ";
+        os << current->getItem() << " ";
 
         if (current->hasRightThread()) {
             // If the right thread is present, move to the successor node
@@ -73,6 +76,12 @@ void ThreadedBST<ItemType>::inorderTraversal() const {
     }
 }
 
+// Overloaded ostream operator for printing the threaded BST
+template<class ItemType>
+ostream& operator<<(ostream& os, const ThreadedBST<ItemType>& tree) {
+    tree.inorderTraversal(os);
+    return os;
+}
 
 // Private Helper Methods
 
