@@ -1,139 +1,243 @@
-// NEEDS TO BE EDITED COMPLETELY
+// Jasjeen Khosa and Ruby Kaur
+// CSS 342
 
-#include "ThreadedBinarySearchTree.h"
+#include "ThreadedBST.h"
+#include <iostream>
 
-template <class KeyType>
-typename ThreadedBST<KeyType>::ThreadedBSTNode* ThreadedBST<KeyType>::InorderIterator::findLeftMost(ThreadedBSTNode<KeyType>* node) {
-    while (node != nullptr && !node->leftThread)
-        node = node->left;
-    return node;
+// Constructor
+template<class ItemType>
+ThreadedBST<ItemType>::ThreadedBST() : rootPtr(nullptr) {}
+
+// Destructor
+template<class ItemType>
+ThreadedBST<ItemType>::~ThreadedBST() {
+    clear();
 }
 
-template <class KeyType>
-typename ThreadedBST<KeyType>::ThreadedBSTNode* ThreadedBST<KeyType>::InorderIterator::findRightMost(ThreadedBSTNode<KeyType>* node) {
-    while (node != nullptr && !node->rightThread)
-        node = node->right;
-    return node;
-}
+// Public methods for inserting, deleting, and traversing the tree
 
-template <class KeyType>
-ThreadedBST<KeyType>::InorderIterator::InorderIterator(ThreadedBSTNode<KeyType>* root) {
-    current = findLeftMost(root);
-}
+template<class ItemType>
+void ThreadedBST<ItemType>::insert(const ItemType& item) {
+    BinaryNode* newNode = new BinaryNode(item);
 
-template <class KeyType>
-KeyType ThreadedBST<KeyType>::InorderIterator::operator*() {
-    return current->key;
-}
-
-template <class KeyType>
-typename ThreadedBST<KeyType>::InorderIterator& ThreadedBST<KeyType>::InorderIterator::operator++() {
-    if (current->rightThread)
-        current = current->right;
-    else
-        current = findLeftMost(current->right);
-    return *this;
-}
-
-template <class KeyType>
-bool ThreadedBST<KeyType>::InorderIterator::operator==(const InorderIterator& other) const {
-    return current == other.current;
-}
-
-template <class KeyType>
-bool ThreadedBST<KeyType>::InorderIterator::operator!=(const InorderIterator& other) const {
-    return !(*this == other);
-}
-
-template <class KeyType>
-typename ThreadedBST<KeyType>::InorderIterator ThreadedBST<KeyType>::begin() {
-    return InorderIterator(root);
-}
-
-template <class KeyType>
-typename ThreadedBST<KeyType>::InorderIterator ThreadedBST<KeyType>::end() {
-    return InorderIterator(nullptr);
-}
-
-template <class KeyType>
-void ThreadedBST<KeyType>::clear(ThreadedBSTNode<KeyType>* node) {
-    if (node == nullptr)
-        return;
-    if (!node->leftThread)
-        clear(node->left);
-    if (!node->rightThread)
-        clear(node->right);
-    delete node;
-}
-
-template <class KeyType>
-typename ThreadedBST<KeyType>::ThreadedBSTNode* ThreadedBST<KeyType>::insert(ThreadedBSTNode<KeyType>* node, const KeyType& key) {
-    if (node == nullptr)
-        return new ThreadedBSTNode<KeyType>(key);
-
-    if (key < node->key) {
-        if (node->leftThread) {
-            node->left = new ThreadedBSTNode<KeyType>(key);
-            node->left->right = node;
-            node->leftThread = false;
-        } else {
-            node->left = insert(node->left, key);
-        }
-    } else if (key > node->key) {
-        if (node->rightThread) {
-            node->right = new ThreadedBSTNode<KeyType>(key);
-            node->right->left = node;
-            node->rightThread = false;
-        } else {
-            node->right = insert(node->right, key);
-        }
-    }
-    return node;
-}
-
-template <class KeyType>
-void ThreadedBST<KeyType>::insert(const KeyType& key) {
-    root = insert(root, key);
-}
-
-template <class KeyType>
-typename ThreadedBST<KeyType>::ThreadedBSTNode* ThreadedBST<KeyType>::remove(ThreadedBSTNode<KeyType>* node, const KeyType& key) {
-    if (node == nullptr)
-        return nullptr;
-
-    if (key < node->key) {
-        if (!node->leftThread)
-            node->left = remove(node->left, key);
-    } else if (key > node->key) {
-        if (!node->rightThread)
-            node->right = remove(node->right, key);
+    if (rootPtr == nullptr) {
+        rootPtr = newNode;
     } else {
-        if (node->left == nullptr && node->right == nullptr) {
-            delete node;
-            return nullptr;
-        } else if (node->left == nullptr) {
-            ThreadedBSTNode<KeyType>* successor = findLeftMost(node->right);
-            node->key = successor->key;
-            node->right = remove(node->right, successor->key);
-        } else if (node->right == nullptr) {
-            ThreadedBSTNode<KeyType>* predecessor = findRightMost(node->left);
-            node->key = predecessor->key;
-            node->left = remove(node->left, predecessor->key);
+        insertInorder(rootPtr, newNode);
+    }
+}
+
+template<class ItemType>
+void ThreadedBST<ItemType>::deleteItem(const ItemType& target) {
+    bool found = false;
+    BinaryNode* targetNode = findNode(rootPtr, target, found);
+
+    if (found) {
+        deleteNode(targetNode);
+    }
+}
+
+template<class ItemType>
+void ThreadedBST<ItemType>::inorderTraversal() const {
+    BinaryNode* current = findLeftmostNode(rootPtr);
+
+    while (current != nullptr) {
+        std::cout << current->getItem() << " ";
+
+        if (current->hasRightThread()) {
+            current = current->getRightChildPtr();
         } else {
-            ThreadedBSTNode<KeyType>* successor = findLeftMost(node->right);
-            node->key = successor->key;
-            node->right = remove(node->right, successor->key);
+            current = findLeftmostNode(current->getRightChildPtr());
         }
     }
+}
+
+// Private Helper Methods
+
+template<class ItemType>
+typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findNode(BinaryNode* subTreePtr,
+    const ItemType& target, bool& found) const {
+    if (subTreePtr == nullptr) {
+        found = false;
+        return nullptr;
+    } else if (subTreePtr->getItem() == target) {
+        found = true;
+        return subTreePtr;
+    } else if (subTreePtr->getItem() > target && !subTreePtr->hasLeftThread()) {
+        return findNode(subTreePtr->getLeftChildPtr(), target, found);
+    } else if (subTreePtr->getItem() < target && !subTreePtr->hasRightThread()) {
+        return findNode(subTreePtr->getRightChildPtr(), target, found);
+    } else {
+        found = false;
+        return nullptr;
+    }
+}
+
+template<class ItemType>
+typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findLeftmostNode(BinaryNode* node) const {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    while (node->getLeftChildPtr() != nullptr && !node->hasLeftThread()) {
+        node = node->getLeftChildPtr();
+    }
+
     return node;
 }
 
-template <class KeyType>
-bool ThreadedBST<KeyType>::remove(const KeyType& key) {
-    if (isEmpty())
-        return false;
-
-    root = remove(root, key);
-    return true;
+template<class ItemType>
+void ThreadedBST<ItemType>::insertInorder(BinaryNode* subTreePtr, BinaryNode* newNode) {
+    if (newNode->getItem() < subTreePtr->getItem()) {
+        if (subTreePtr->hasLeftThread()) {
+            newNode->setLeftChildPtr(subTreePtr->getLeftChildPtr());
+            newNode->setRightChildPtr(subTreePtr);
+            subTreePtr->setLeftChildPtr(newNode);
+            subTreePtr->setLeftThread(false);
+        } else {
+            insertInorder(subTreePtr->getLeftChildPtr(), newNode);
+        }
+    } else {
+        if (subTreePtr->hasRightThread()) {
+            newNode->setRightChildPtr(subTreePtr->getRightChildPtr());
+            newNode->setLeftChildPtr(subTreePtr);
+            subTreePtr->setRightChildPtr(newNode);
+            subTreePtr->setRightThread(false);
+        } else {
+            insertInorder(subTreePtr->getRightChildPtr(), newNode);
+        }
+    }
 }
 
+template<class ItemType>
+void ThreadedBST<ItemType>::deleteNode(BinaryNode* node) {
+    // Case 1: Node has no children
+    if (node->isLeaf()) {
+        BinaryNode* parent = findParent(rootPtr, node);
+        if (parent == nullptr) {
+            rootPtr = nullptr;
+        } else if (parent->getLeftChildPtr() == node) {
+            parent->setLeftChildPtr(node->getLeftChildPtr());
+            parent->setLeftThread(true);
+        } else {
+            parent->setRightChildPtr(node->getRightChildPtr());
+            parent->setRightThread(true);
+        }
+        delete node;
+    }
+    // Case 2: Node has one child
+    else if (node->getLeftChildPtr() == nullptr || node->getRightChildPtr() == nullptr) {
+        BinaryNode* parent = findParent(rootPtr, node);
+        BinaryNode* child = nullptr;
+        if (node->getLeftChildPtr() != nullptr) {
+            child = node->getLeftChildPtr();
+        } else {
+            child = node->getRightChildPtr();
+        }
+        if (parent == nullptr) {
+            rootPtr = child;
+        } else if (parent->getLeftChildPtr() == node) {
+            parent->setLeftChildPtr(child);
+        } else {
+            parent->setRightChildPtr(child);
+        }
+        delete node;
+    }
+    // Case 3: Node has two children
+    else {
+        BinaryNode* successor = findSuccessor(node);
+        ItemType successorValue = successor->getItem();
+        deleteNode(successor);
+        node->setItem(successorValue);
+    }
+}
+
+template<class ItemType>
+typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findParent(BinaryNode* subTreePtr, BinaryNode* node) const {
+    if (subTreePtr == nullptr) {
+        return nullptr;
+    } else if ((subTreePtr->hasLeftThread() && subTreePtr->getLeftChildPtr() == node) ||
+               (subTreePtr->hasRightThread() && subTreePtr->getRightChildPtr() == node)) {
+        return subTreePtr;
+    } else if (node->getItem() < subTreePtr->getItem()) {
+        return findParent(subTreePtr->getLeftChildPtr(), node);
+    } else {
+        return findParent(subTreePtr->getRightChildPtr(), node);
+    }
+}
+
+template<class ItemType>
+typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findSuccessor(BinaryNode* node) const {
+    if (node->hasRightThread()) {
+        return node->getRightChildPtr();
+    } else {
+        BinaryNode* current = node->getRightChildPtr();
+        while (!current->hasLeftThread()) {
+            current = current->getLeftChildPtr();
+        }
+        return current;
+    }
+}
+
+template<class ItemType>
+void ThreadedBST<ItemType>::clear() {
+    clearTree(rootPtr);
+    rootPtr = nullptr;
+}
+
+template<class ItemType>
+void ThreadedBST<ItemType>::clearTree(BinaryNode* subTreePtr) {
+    if (subTreePtr != nullptr) {
+        if (!subTreePtr->hasLeftThread()) {
+            clearTree(subTreePtr->getLeftChildPtr());
+        }
+
+        if (!subTreePtr->hasRightThread()) {
+            clearTree(subTreePtr->getRightChildPtr());
+        }
+
+        delete subTreePtr;
+    }
+}
+
+template<class ItemType>
+typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::copyTree(const BinaryNode* treePtr) const {
+    if (treePtr == nullptr) {
+        return nullptr;
+    }
+
+    BinaryNode* newNode = new BinaryNode(treePtr->getItem());
+    newNode->setLeftThread(treePtr->hasLeftThread());
+    newNode->setRightThread(treePtr->hasRightThread());
+
+    if (!treePtr->hasLeftThread()) {
+        newNode->setLeftChildPtr(copyTree(treePtr->getLeftChildPtr()));
+    }
+
+    if (!treePtr->hasRightThread()) {
+        newNode->setRightChildPtr(copyTree(treePtr->getRightChildPtr()));
+    }
+
+    return newNode;
+}
+
+template<class ItemType>
+void ThreadedBST<ItemType>::copyThreadedNodes(BinaryNode* newTreePtr, const BinaryNode* treePtr) {
+    if (newTreePtr == nullptr || treePtr == nullptr) {
+        return;
+    }
+
+    if (!treePtr->hasLeftThread()) {
+        BinaryNode* leftChild = newTreePtr->getLeftChildPtr();
+        const BinaryNode* leftChildThreaded = treePtr->getLeftChildPtr();
+        leftChild->setRightChildPtr(leftChildThreaded);
+        copyThreadedNodes(leftChild, leftChildThreaded);
+    }
+
+    if (!treePtr->hasRightThread()) {
+        BinaryNode* rightChild = newTreePtr->getRightChildPtr();
+        const BinaryNode* rightChildThreaded = treePtr->getRightChildPtr();
+        rightChild->setLeftChildPtr(rightChildThreaded);
+        copyThreadedNodes(rightChild, rightChildThreaded);
+    }
+}
