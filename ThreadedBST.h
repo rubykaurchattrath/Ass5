@@ -9,8 +9,8 @@ private:
         ItemType item; // Data portion
         BinaryNode* leftChildPtr; // Pointer to left child
         BinaryNode* rightChildPtr; // Pointer to right child
-        bool leftThread; // Flag indicating if the left child is a thread
-        bool rightThread; // Flag indicating if the right child is a thread
+        bool leftThread; // true if left child is a thread
+        bool rightThread; // true if right child is a thread
 
     public:
         BinaryNode();
