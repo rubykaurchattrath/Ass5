@@ -1,6 +1,13 @@
 // Jasjeen Khosa and Ruby Kaur
 // CSS 342
 
+
+
+
+
+
+/**
+
 #include "ThreadedBST.h"
 #include <iostream>
 using namespace std;
@@ -21,6 +28,8 @@ ThreadedBST<ItemType>::~ThreadedBST() {
  * Inserts a new item into the threaded bst.
  * @param item The item to be inserted.
  */
+
+/**
 template<class ItemType>
 void ThreadedBST<ItemType>::insert(const ItemType& item) {
     // Create a new node with the given item
@@ -39,6 +48,8 @@ void ThreadedBST<ItemType>::insert(const ItemType& item) {
  * Deletes the specified item from the threaded bst.
  * @param target The item to be deleted.
  */
+
+/**
 template<class ItemType>
 void ThreadedBST<ItemType>::deleteItem(const ItemType& target) {
     bool found = false;
@@ -57,6 +68,8 @@ void ThreadedBST<ItemType>::deleteItem(const ItemType& target) {
  */
 // Performs an inorder traversal of the threaded bst
 // and outputs the items to the given ostream.
+
+/**
 template<class ItemType>
 void ThreadedBST<ItemType>::inorderTraversal(std::ostream& os) const {
     // Start from the leftmost node of the tree
@@ -92,6 +105,8 @@ ostream& operator<<(ostream& os, const ThreadedBST<ItemType>& tree) {
  * @param found A boolean flag indicating whether the target item is found.
  * @return A pointer to the node containing the target item if found, nullptr otherwise.
  */
+
+/**
 template<class ItemType>
 typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findNode(BinaryNode* subTreePtr,
     const ItemType& target, bool& found) const {
@@ -123,6 +138,8 @@ typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findNode(Bina
  * @param node The starting node for the search.
  * @return Pointer to the leftmost node.
  */
+
+/**
 template<class ItemType>
 typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findLeftmostNode(BinaryNode* node) const {
     if (node == nullptr) {
@@ -143,6 +160,8 @@ typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findLeftmostN
  * @param subTreePtr A pointer to the root of the subtree.
  * @param newNode A pointer to the new node to be inserted.
  */
+
+/**
 template<class ItemType>
 void ThreadedBST<ItemType>::insertInorder(BinaryNode* subTreePtr, BinaryNode* newNode) {
     if (newNode->getItem() < subTreePtr->getItem()) {
@@ -176,6 +195,8 @@ void ThreadedBST<ItemType>::insertInorder(BinaryNode* subTreePtr, BinaryNode* ne
  * Deletes a node from the threaded bst.
  * @param node A pointer to the node to be deleted.
  */
+
+/**
 template<class ItemType>
 void ThreadedBST<ItemType>::deleteNode(BinaryNode* node) {
     // Case 1: Node has no children
@@ -238,6 +259,8 @@ void ThreadedBST<ItemType>::deleteNode(BinaryNode* node) {
  * @param node A pointer to the node whose parent needs to be found.
  * @return A pointer to the parent node, or nullptr if the parent is not found.
  */
+
+/**
 template<class ItemType>
 typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findParent(BinaryNode* subTreePtr, BinaryNode* node) const {
     if (subTreePtr == nullptr) {
@@ -261,6 +284,8 @@ typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findParent(Bi
  * @param node A pointer to the node whose successor needs to be found.
  * @return A pointer to the successor node.
  */
+
+/**
 template<class ItemType>
 typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::findSuccessor(BinaryNode* node) const {
     if (node->hasRightThread()) {
@@ -287,6 +312,8 @@ void ThreadedBST<ItemType>::clear() {
  * Recursively clears the tree starting from the given node.
  * @param subTreePtr A pointer to the root of the subtree to clear.
  */
+
+/**
 template<class ItemType>
 void ThreadedBST<ItemType>::clearTree(BinaryNode* subTreePtr) {
     if (subTreePtr != nullptr) {
@@ -310,6 +337,8 @@ void ThreadedBST<ItemType>::clearTree(BinaryNode* subTreePtr) {
  * @param treePtr A pointer to the root of the tree to copy.
  * @return A pointer to the root of the copied tree.
  */
+
+/**
 template<class ItemType>
 typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::copyTree(const BinaryNode* treePtr) const {
     if (treePtr == nullptr) {
@@ -340,6 +369,8 @@ typename ThreadedBST<ItemType>::BinaryNode* ThreadedBST<ItemType>::copyTree(cons
  * @param newTreePtr A pointer to the corresponding node in the destination tree.
  * @param treePtr A pointer to the corresponding node in the source tree.
  */
+
+/**
 template<class ItemType>
 void ThreadedBST<ItemType>::copyThreadedNodes(BinaryNode* newTreePtr, const BinaryNode* treePtr) {
     if (newTreePtr == nullptr || treePtr == nullptr) {
