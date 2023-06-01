@@ -108,36 +108,12 @@ void ThreadedBST::copyTree(const ThreadedBST& other) {
 
     if (other.root->left != nullptr) {
         // Recursively insert nodes from the left subtree of the other tree
-        copyTreeHelper(root, other.root->left);
+        copyTree(other.root->left);
     }
 
     if (other.root->right != nullptr) {
         // Recursively insert nodes from the right subtree of the other tree
-        copyTreeHelper(root, other.root->right);
-    }
-}
-
-void ThreadedBST::copyTreeHelper(Node* current, Node* other) {
-    if (current->key > other->key) {
-        if (current->left == nullptr) {
-            // Create a new node as the left child and link the right pointer
-            current->left = new Node(other->key);
-            current->left->right = current;
-            current->left->isThreaded = true;
-        } else {
-            // Recursively insert into the left subtree
-            copyTreeHelper(current->left, other);
-        }
-    } else if (current->key < other->key) {
-        if (current->right == nullptr) {
-            // Create a new node as the right child and link the left pointer
-            current->right = new Node(other->key);
-            current->right->left = current;
-            current->right->isThreaded = true;
-        } else {
-            // Recursively insert into the right subtree
-            copyTreeHelper(current->right, other);
-        }
+        copyTree(other.root->right);
     }
 }
 
