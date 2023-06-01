@@ -4,93 +4,78 @@
 #ifndef THREADEDBST_H
 #define THREADEDBST_H
 
-/**
- * Threaded Binary Search Tree implementation.
- */
 class ThreadedBST {
+public:
+    // Constructor
+    ThreadedBST();
+
+    // Copy constructor
+    ThreadedBST(const ThreadedBST& other);
+
+    // Destructor
+    ~ThreadedBST();
+
+    // Insert a key into the threaded binary search tree
+    void insert(int key);
+
+    // Remove a key from the threaded binary search tree
+    void remove(int key);
+
+    // Iterator class for inorder traversal
+    class InorderIterator {
+    public:
+        // Constructor
+        InorderIterator(Node* root);
+
+        // Dereference operator
+        int operator*();
+
+        // Prefix increment operator
+        InorderIterator& operator++();
+
+        // Inequality operator
+        bool operator!=(const InorderIterator& other);
+
+    private:
+        Node* current; // Current node in the traversal
+        Node* getNext(Node* node); // Helper function to find the next node in inorder traversal
+    };
+
+    // Get the iterator to the first element in inorder traversal
+    InorderIterator begin();
+
+    // Get the iterator to the end sentinel in inorder traversal
+    InorderIterator end();
+
 private:
+    // Node structure for threaded binary search tree
     struct Node {
         int key;
         Node* left;
         Node* right;
-        bool isThreaded; // Flag to distinguish threads from real child pointers
+        bool isThreaded;
 
-        /**
-         * Node constructor.
-         * @param k The key value of the node.
-         */
-        Node(int k) : key(k), left(nullptr), right(nullptr), isThreaded(false) {}
+        // Constructor
+        Node(int key) : key(key), left(nullptr), right(nullptr), isThreaded(false) {}
     };
 
-    Node* root;
+    Node* root; // Root node of the threaded binary search tree
 
-public:
-    ThreadedBST();
-    ThreadedBST(const ThreadedBST& other);
-    ~ThreadedBST();
+    // Private helper functions
 
-    /**
-     * Inserts a key into the threaded BST.
-     * @param key The key to be inserted.
-     */
-    void insert(int key);
-
-    /**
-     * Removes a key from the threaded BST.
-     * @param key The key to be removed.
-     */
-    void remove(int key);
-
-    class InorderIterator {
-    private:
-        Node* current;
-        Node* getNext(Node* node);
-
-    public:
-        /**
-         * InorderIterator constructor.
-         * @param root The root node of the threaded BST.
-         */
-        InorderIterator(Node* root);
-
-        /**
-         * Dereference operator overload.
-         * @return The key value of the current node.
-         */
-        int operator*();
-
-        /**
-         * Pre-increment operator overload.
-         * Moves the iterator to the next node in inorder traversal.
-         * @return The reference to the updated iterator.
-         */
-        InorderIterator& operator++();
-
-        /**
-         * Inequality operator overload.
-         * @param other The other iterator to compare with.
-         * @return True if the iterators are not equal, false otherwise.
-         */
-        bool operator!=(const InorderIterator& other);
-    };
-
-    /**
-     * Returns an iterator to the beginning of the inorder traversal.
-     * @return The iterator to the beginning.
-     */
-    InorderIterator begin();
-
-    /**
-     * Returns an iterator to the end of the inorder traversal.
-     * @return The iterator to the end.
-     */
-    InorderIterator end();
-
-private:
+    // Recursive insertion function
     void insert(Node*& node, int key);
+
+    // Recursive removal function
     void remove(Node*& node, int key);
+
+    // Helper function to find the minimum node in a subtree
     Node* findMin(Node* node);
+
+    // Helper function to copy the tree
     void copyTree(const ThreadedBST& other);
+
+    // Helper function to destroy the tree
     void destroyTree(Node* node);
 };
 
