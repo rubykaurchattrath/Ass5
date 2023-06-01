@@ -1,0 +1,45 @@
+Thu Jun  1 12:14:11 PDT 2023
+*** compiling with clang++ to create an executable called myprogram
+clang version 14.0.6 (Red Hat 14.0.6-1.module+el8.7.0+1080+d88dc670)
+Target: x86_64-redhat-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+ThreadedBST.cpp:111:18: error: reference to type 'const ThreadedBST' could not bind to an lvalue of type 'ThreadedBST::Node *'
+        copyTree(other.root->left);
+                 ^~~~~~~~~~~~~~~~
+ThreadedBST.cpp:101:47: note: passing argument to parameter 'other' here
+void ThreadedBST::copyTree(const ThreadedBST& other) {
+                                              ^
+ThreadedBST.cpp:116:18: error: reference to type 'const ThreadedBST' could not bind to an lvalue of type 'ThreadedBST::Node *'
+        copyTree(other.root->right);
+                 ^~~~~~~~~~~~~~~~~
+ThreadedBST.cpp:101:47: note: passing argument to parameter 'other' here
+void ThreadedBST::copyTree(const ThreadedBST& other) {
+                                              ^
+2 errors generated.
+*** running clang-tidy using options from .clang-tidy
+LLVM (http://llvm.org/):
+  LLVM version 14.0.6
+  Optimized build.
+  Default target: x86_64-redhat-linux-gnu
+  Host CPU: cascadelake
+2 errors generated.
+Error while processing /home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp.
+/home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp:111:18: error: reference to type 'const ThreadedBST' could not bind to an lvalue of type 'ThreadedBST::Node *' [clang-diagnostic-error]
+        copyTree(other.root->left);
+                 ^~~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp:101:47: note: passing argument to parameter 'other' here
+void ThreadedBST::copyTree(const ThreadedBST& other) {
+                                              ^
+/home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp:116:18: error: reference to type 'const ThreadedBST' could not bind to an lvalue of type 'ThreadedBST::Node *' [clang-diagnostic-error]
+        copyTree(other.root->right);
+                 ^~~~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp:101:47: note: passing argument to parameter 'other' here
+void ThreadedBST::copyTree(const ThreadedBST& other) {
+                                              ^
+Found compiler error(s).
+*** running myprogram
+./simplecompile.sh: line 28: ./myprogram: No such file or directory
+*** cleaning up, deleting myprogram
+rm: cannot remove 'myprogram': No such file or directory
+Thu Jun  1 12:14:12 PDT 2023
