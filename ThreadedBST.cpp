@@ -98,7 +98,7 @@ ThreadedBST::Node* ThreadedBST::findMin(Node* node) {
     return node;
 }
 
-void ThreadedBST::copyTree(const ThreadedBST& other) {
+/*void ThreadedBST::copyTree(const ThreadedBST& other) {
     if (other.root == nullptr) {
         return;
     }
@@ -115,7 +115,27 @@ void ThreadedBST::copyTree(const ThreadedBST& other) {
         // Recursively insert nodes from the right subtree of the other tree
         copyTree(other.root->right);
     }
+}*/
+
+void ThreadedBST::copyTree(Node* node) {
+    if (node == nullptr) {
+        return;
+    }
+
+    // Insert the node key into the current tree
+    insert(node->key);
+
+    if (node->left != nullptr) {
+        // Recursively insert nodes from the left subtree
+        copyTree(node->left);
+    }
+
+    if (!node->isThreaded) {
+        // Recursively insert nodes from the right subtree
+        copyTree(node->right);
+    }
 }
+
 
 void ThreadedBST::destroyTree(Node* node) {
     if (node != nullptr) {
