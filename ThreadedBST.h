@@ -1,6 +1,3 @@
-// Jasjeen Khosa and Ruby Kaur
-// CSS 342
-
 #ifndef THREADEDBST_H
 #define THREADEDBST_H
 
