@@ -1,7 +1,7 @@
 // Jasjeen Khosa and Ruby Kaur
 // CSS 342
 
-#include "ThreadedBST.cpp"
+#include "ThreadedBST.h"
 #include <iostream>
 using namespace std;
 
