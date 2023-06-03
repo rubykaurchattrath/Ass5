@@ -10,7 +10,10 @@ ThreadedBST::ThreadedBST() : root(nullptr) {}
 
 // ThreadedBST class destructor
 ThreadedBST::~ThreadedBST() {
-    // TODO: Implement tree deallocation (delete all nodes)
+    // Traverse the tree and delete all nodes
+    while (root != nullptr) {
+        remove(root->key);
+    }
 }
 
 // Insert a key into the threaded binary search tree
