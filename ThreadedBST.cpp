@@ -203,7 +203,7 @@ void ThreadedBST::inorder() {
     while (current != nullptr) {
         cout << current->key << " ";
 
-        if (!current->rightThread) {
+        if (!current->isThread) {
             current = current->right;
             while (current->left != nullptr)
                 current = current->left;
