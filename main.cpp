@@ -1,39 +1,46 @@
 // Jasjeen Khosa and Ruby Kaur
 // CSS 342
 
+#include "ThreadedBST.cpp"
 #include <iostream>
-#include "ThreadedBST.h"
 using namespace std;
 
-int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cout << "Usage: ./program_name <number_of_nodes>" << endl;
-        return 1;
-    }
+ int main() {
+    ThreadedBST tree;
 
-    int n = stoi(argv[1]);
+    // Insert some keys into the tree
+    tree.insert(5);
+    tree.insert(3);
+    tree.insert(7);
+    tree.insert(2);
+    tree.insert(4);
+    tree.insert(6);
+    tree.insert(8);
 
-    ThreadedBST bst;
-    for (int i = n; i >= 1; i--) {
-        bst.insert(i);
-    }
+    // Display the tree
+    cout << "Displaying the tree: ";
+    tree.display();
+    cout << "Expected: 2 3 4 5 6 7 8" << endl;
 
-    ThreadedBST copy = bst;
-    ThreadedBST::InorderIterator bstIterator = bst.begin();
-    ThreadedBST::InorderIterator copyIterator = copy.begin();
+    // Perform inorder traversal
+    cout << "Inorder traversal: ";
+    tree.inorder();
+    cout << "Expected: 2 3 4 5 6 7 8" << endl;
 
-    while (bstIterator != bst.end()) {
-        cout << *bstIterator << " ";
-        ++bstIterator;
-    }
-    std::cout << std::endl;
+    // Remove a key from the tree
+    tree.remove(4);
 
-    while (copyIterator != copy.end()) {
-        cout << *copyIterator << " ";
-        ++copyIterator;
-    }
-    cout << endl;
+    // Display the updated tree
+    cout << "Displaying the updated tree: ";
+    tree.display();
+    cout << "Expected: 2 3 5 6 7 8" << endl;
+
+    // Perform inorder traversal again
+    cout << "Inorder traversal: ";
+    tree.inorder();
+    cout << "Expected: 2 3 5 6 7 8" << endl;
 
     return 0;
 }
+
 
