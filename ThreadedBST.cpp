@@ -9,29 +9,39 @@ using namespace std;
 ThreadedBST::ThreadedBST() : root(nullptr) {}
 
 // Copy constructor
-ThreadedBST::ThreadedBST(const ThreadedBST& other) : root(nullptr) {
-    // Copy the other tree by inserting each key
-    if (other.root != nullptr) {
-        insert(other.root->key);
-        copyTree(other.root->left);
-        copyTree(other.root->right);
-    }
+ThreadedBST::ThreadedBST(const ThreadedBST& other) {
+    // Call the recursive helper function to copy the tree
+    root = copyTree(other.root);
 }
 
-// Helper function to copy the tree recursively
-void ThreadedBST::copyTree(Node* node) {
-    if (node != nullptr) {
-        insert(node->key);
-        copyTree(node->left);
-        copyTree(node->right);
+// Recursive helper function to copy the tree
+Node* ThreadedBST::copyTree(Node* node) {
+    if (node == nullptr) {
+        return nullptr;
     }
+
+    Node* newNode = new Node(node->key);
+    newNode->rightThread = node->rightThread;
+    newNode->left = copyTree(node->left);
+    newNode->right = copyTree(node->right);
+
+    return newNode;
 }
 
 // Destructor
 ThreadedBST::~ThreadedBST() {
-    // Traverse the tree and delete all nodes
-    while (root != nullptr) {
-        remove(root->key);
+    if (root != nullptr) {
+        // Start from the leftmost node and deallocate each node
+        Node* current = root;
+        while (current->left != nullptr) {
+            current = current->left;
+        }
+
+        while (current != nullptr) {
+            Node* temp = current;
+            current = findSuccessor(current);
+            delete temp;
+        }
     }
 }
 
