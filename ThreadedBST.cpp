@@ -2,195 +2,195 @@
 // CSS 342
 
 #include "ThreadedBST.h"
+#include <iostream>
+using namespace std;
 
+// ThreadedBST class constructor
 ThreadedBST::ThreadedBST() : root(nullptr) {}
 
-ThreadedBST::ThreadedBST(const ThreadedBST& other) : root(nullptr) {
-    copyTree(other);
-}
-
+// ThreadedBST class destructor
 ThreadedBST::~ThreadedBST() {
-    destroyTree(root);
+    // TODO: Implement tree deallocation (delete all nodes)
 }
 
+// Insert a key into the threaded binary search tree
 void ThreadedBST::insert(int key) {
-    insert(root, key);
+    if (root == nullptr) {
+        root = new Node(key);
+        root->rightThread = true;
+    } else {
+        Node* newNode = new Node(key);
+        Node* current = root;
+        Node* parent = nullptr;
+
+        while (true) {
+            parent = current;
+
+            if (key < current->key) {
+                if (current->left == nullptr) {
+                    current->left = newNode;
+                    newNode->right = current;
+                    newNode->rightThread = true;
+                    break;
+                } else {
+                    current = current->left;
+                }
+            } else if (key > current->key) {
+                if (!current->rightThread) {
+                    current = current->right;
+                } else {
+                    newNode->right = current->right;
+                    newNode->rightThread = true;
+                    current->right = newNode;
+                    current->rightThread = false;
+                    break;
+                }
+            } else {
+                delete newNode;  // Duplicate key, ignore and delete the new node
+                return;
+            }
+        }
+    }
 }
 
+// Remove a key from the threaded binary search tree
 void ThreadedBST::remove(int key) {
-    remove(root, key);
-}
+    Node* target = root;
+    Node* parent = nullptr;
+    bool found = false;
 
-void ThreadedBST::insert(Node*& node, int key) {
-    if (node == nullptr) {
-        // Create a new node and set its key
-        node = new Node(key);
-        return;
-    }
+    while (target != nullptr) {
+        if (key < target->key) {
+            parent = target;
+            target = target->left;
+        } else if (key > target->key) {
+            if (target->rightThread)
+                return;
 
-    if (key < node->key) {
-        if (node->left == nullptr) {
-            // If the left child is nullptr, create a new node as the left child
-            node->left = new Node(key);
-            // Set the right pointer of the new left child to the current node
-            node->left->right = node;
-            // Set the threaded flag to indicate that it is a thread
-            node->left->isThreaded = true;
+            parent = target;
+            target = target->right;
         } else {
-            // Recursively insert into the left subtree
-            insert(node->left, key);
-        }
-    } else if (key > node->key) {
-        if (node->right == nullptr) {
-            // If the right child is nullptr, create a new node as the right child
-            node->right = new Node(key);
-            // Set the left pointer of the new right child to the current node
-            node->right->left = node;
-            // Set the threaded flag to indicate that it is a thread
-            node->right->isThreaded = true;
-        } else {
-            // Recursively insert into the right subtree
-            insert(node->right, key);
+            found = true;
+            break;
         }
     }
-}
 
-void ThreadedBST::remove(Node*& node, int key) {
-    if (node == nullptr) {
+    if (!found)
         return;
-    }
 
-    if (key < node->key) {
-        // Key is smaller, go to the left subtree
-        remove(node->left, key);
-    } else if (key > node->key) {
-        // Key is larger, go to the right subtree
-        remove(node->right, key);
+    if (target->left == nullptr && target->right == nullptr) {
+        if (target == root) {
+            delete root;
+            root = nullptr;
+        } else if (target == parent->left) {
+            parent->left = nullptr;
+            parent->rightThread = true;
+            delete target;
+        } else {
+            parent->right = target->right;
+            delete target;
+        }
+    } else if (target->left == nullptr) {
+        if (target == root) {
+            root = target->right;
+        } else if (target == parent->left) {
+            parent->left = target->right;
+        } else {
+            parent->right = target->right;
+        }
+        Node* successor = findSuccessor(target);
+        delete target;
+        successor->left = nullptr;
+    } else if (target->right == nullptr) {
+        if (target == root) {
+            root = target->left;
+        } else if (target == parent->left) {
+            parent->left = target->left;
+        } else {
+            parent->right = target->left;
+        }
+        delete target;
     } else {
-        if (node->left == nullptr && node->right == nullptr) {
-            // Case 1: Node has no children
-            delete node;
-            node = nullptr;
-        } else if (node->left == nullptr) {
-            // Case 2: Node has only right child
-            Node* temp = node;
-            node = node->right;
-            delete temp;
-        } else if (node->right == nullptr) {
-            // Case 3: Node has only left child
-            Node* temp = node;
-            node = node->left;
-            delete temp;
+        Node* successorParent = target;
+        Node* successor = target->right;
+
+        while (successor->left != nullptr) {
+            successorParent = successor;
+            successor = successor->left;
+        }
+
+        target->key = successor->key;
+
+        if (successorParent == target) {
+            successorParent->right = successor->right;
         } else {
-            // Case 4: Node has both left and right children
-            Node* minNode = findMin(node->right);
-            node->key = minNode->key;
-            remove(node->right, minNode->key);
+            successorParent->left = successor->right;
         }
+
+        delete successor;
     }
 }
 
-ThreadedBST::Node* ThreadedBST::findMin(Node* node) {
-    while (node->left != nullptr) {
-        // Traverse to the leftmost node in the subtree
-        node = node->left;
-    }
-    return node;
-}
-
-/*void ThreadedBST::copyTree(const ThreadedBST& other) {
-    if (other.root == nullptr) {
+// Display the threaded binary search tree in inorder traversal
+void ThreadedBST::display() {
+    if (root == nullptr) {
+        cout << "Tree is empty." << endl;
         return;
     }
 
-    // Insert the root node of the other tree
-    insert(other.root->key);
+    Node* current = root;
+    while (current->left != nullptr)
+        current = current->left;
 
-    if (other.root->left != nullptr) {
-        // Recursively insert nodes from the left subtree of the other tree
-        copyTree(other.root->left);
+    while (current != nullptr) {
+        cout << current->key << " ";
+
+        if (!current->rightThread) {
+            current = current->right;
+            while (current->left != nullptr)
+                current = current->left;
+        } else {
+            current = current->right;
+        }
     }
 
-    if (other.root->right != nullptr) {
-        // Recursively insert nodes from the right subtree of the other tree
-        copyTree(other.root->right);
-    }
-}*/
+    cout << endl;
+}
 
-void ThreadedBST::copyTree(Node* node) {
-    if (node == nullptr) {
+// Perform inorder traversal of the threaded binary search tree
+void ThreadedBST::inorder() {
+    if (root == nullptr) {
+        cout << "Tree is empty." << endl;
         return;
     }
 
-    // Insert the node key into the current tree
-    insert(node->key);
+    Node* current = root;
+    while (current->left != nullptr)
+        current = current->left;
 
-    if (node->left != nullptr) {
-        // Recursively insert nodes from the left subtree
-        copyTree(node->left);
-    }
+    while (current != nullptr) {
+        cout << current->key << " ";
 
-    if (!node->isThreaded) {
-        // Recursively insert nodes from the right subtree
-        copyTree(node->right);
-    }
-}
-
-
-void ThreadedBST::destroyTree(Node* node) {
-    if (node != nullptr) {
-        destroyTree(node->left);
-        if (!node->isThreaded) {
-            destroyTree(node->right);
-        }
-        delete node;
-    }
-}
-
-ThreadedBST::InorderIterator::InorderIterator(Node* root) : current(root) {
-    if (current != nullptr) {
-        // Move to the leftmost node in the tree
-        while (current->left != nullptr) {
-            current = current->left;
+        if (!current->rightThread) {
+            current = current->right;
+            while (current->left != nullptr)
+                current = current->left;
+        } else {
+            current = current->right;
         }
     }
+
+    cout << endl;
 }
 
-int ThreadedBST::InorderIterator::operator*() {
-    return current->key;
-}
+// Find the inorder successor of a node in the threaded binary search tree
+Node* ThreadedBST::findSuccessor(Node* node) {
+    if (node->rightThread)
+        return node->right;
 
-ThreadedBST::InorderIterator& ThreadedBST::InorderIterator::operator++() {
-    if (current->isThreaded) {
-        // If it is a thread, move to the right node
-        current = current->right;
-    } else {
-        // Otherwise, move to the next node in inorder traversal
-        current = getNext(current->right);
-    }
-    return *this;
-}
+    Node* current = node->right;
+    while (current->left != nullptr)
+        current = current->left;
 
-bool ThreadedBST::InorderIterator::operator!=(const InorderIterator& other) {
-    return current != other.current;
-}
-
-ThreadedBST::InorderIterator ThreadedBST::begin() {
-    return InorderIterator(root);
-}
-
-ThreadedBST::InorderIterator ThreadedBST::end() {
-    return InorderIterator(nullptr);
-}
-
-ThreadedBST::Node* ThreadedBST::InorderIterator::getNext(Node* node) {
-    if (node == nullptr) {
-        return nullptr;
-    }
-
-    // Traverse to the leftmost node in the subtree
-    while (node->left != nullptr) {
-        node = node->left;
-    }
-    return node;
+    return current;
 }
