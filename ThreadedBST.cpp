@@ -5,10 +5,29 @@
 #include <iostream>
 using namespace std;
 
-// ThreadedBST class constructor
+// Constructor
 ThreadedBST::ThreadedBST() : root(nullptr) {}
 
-// ThreadedBST class destructor
+// Copy constructor
+ThreadedBST::ThreadedBST(const ThreadedBST& other) : root(nullptr) {
+    // Copy the other tree by inserting each key
+    if (other.root != nullptr) {
+        insert(other.root->key);
+        copyTree(other.root->left);
+        copyTree(other.root->right);
+    }
+}
+
+// Helper function to copy the tree recursively
+void ThreadedBST::copyTree(Node* node) {
+    if (node != nullptr) {
+        insert(node->key);
+        copyTree(node->left);
+        copyTree(node->right);
+    }
+}
+
+// Destructor
 ThreadedBST::~ThreadedBST() {
     // Traverse the tree and delete all nodes
     while (root != nullptr) {
