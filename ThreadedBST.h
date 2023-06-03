@@ -11,8 +11,9 @@ private:
     Node* root;
 
 public:
-    ThreadedBST();
-    ~ThreadedBST();
+    ThreadedBST(); // constructor
+    ThreadedBST(const ThreadedBST& other); // copy constructor
+    ~ThreadedBST(); // destructor
 
     void insert(int key);
     void remove(int key);
