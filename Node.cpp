@@ -1,3 +1,6 @@
+// Jasjeen Khosa and Ruby Kaur
+// CSS 342
+
 #include <iostream>
 
 class Node {
