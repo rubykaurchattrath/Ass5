@@ -8,7 +8,7 @@ public:
     int key;
     Node* left;
     Node* right;
-    bool rightThread; // flag to distinguish threads
+    bool isThread; // flag to distinguish threads
 
     Node(int k) : key(k), left(nullptr), right(nullptr), rightThread(false) {}
 };
