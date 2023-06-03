@@ -1,45 +1,66 @@
-Thu Jun  1 12:14:11 PDT 2023
+Fri Jun  2 18:26:29 PDT 2023
 *** compiling with clang++ to create an executable called myprogram
 clang version 14.0.6 (Red Hat 14.0.6-1.module+el8.7.0+1080+d88dc670)
 Target: x86_64-redhat-linux-gnu
 Thread model: posix
 InstalledDir: /usr/bin
-ThreadedBST.cpp:111:18: error: reference to type 'const ThreadedBST' could not bind to an lvalue of type 'ThreadedBST::Node *'
-        copyTree(other.root->left);
-                 ^~~~~~~~~~~~~~~~
-ThreadedBST.cpp:101:47: note: passing argument to parameter 'other' here
-void ThreadedBST::copyTree(const ThreadedBST& other) {
-                                              ^
-ThreadedBST.cpp:116:18: error: reference to type 'const ThreadedBST' could not bind to an lvalue of type 'ThreadedBST::Node *'
-        copyTree(other.root->right);
-                 ^~~~~~~~~~~~~~~~~
-ThreadedBST.cpp:101:47: note: passing argument to parameter 'other' here
-void ThreadedBST::copyTree(const ThreadedBST& other) {
-                                              ^
-2 errors generated.
+In file included from main.cpp:4:
+./ThreadedBST.cpp:24:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
+        Node* parent = nullptr;
+              ^
+1 warning generated.
+ThreadedBST.cpp:24:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
+        Node* parent = nullptr;
+              ^
+1 warning generated.
+/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:9: multiple definition of `ThreadedBST::ThreadedBST()'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:9: first defined here
+/tmp/ThreadedBST-4a9aa9.o: In function `~ThreadedBST':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:12: multiple definition of `ThreadedBST::~ThreadedBST()'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:12: first defined here
+/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::insert(int)':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:17: multiple definition of `ThreadedBST::insert(int)'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:17: first defined here
+/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::remove(int)':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:57: multiple definition of `ThreadedBST::remove(int)'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:57: first defined here
+/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::findSuccessor(Node*)':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:187: multiple definition of `ThreadedBST::findSuccessor(Node*)'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:187: first defined here
+/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::display()':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:135: multiple definition of `ThreadedBST::display()'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:135: first defined here
+/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::inorder()':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:161: multiple definition of `ThreadedBST::inorder()'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:161: first defined here
+/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:9: multiple definition of `ThreadedBST::ThreadedBST()'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:9: first defined here
+/tmp/ThreadedBST-4a9aa9.o: In function `~ThreadedBST':
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:12: multiple definition of `ThreadedBST::~ThreadedBST()'
+/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:12: first defined here
+clang-14: error: linker command failed with exit code 1 (use -v to see invocation)
 *** running clang-tidy using options from .clang-tidy
 LLVM (http://llvm.org/):
   LLVM version 14.0.6
   Optimized build.
   Default target: x86_64-redhat-linux-gnu
   Host CPU: cascadelake
-2 errors generated.
-Error while processing /home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp.
-/home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp:111:18: error: reference to type 'const ThreadedBST' could not bind to an lvalue of type 'ThreadedBST::Node *' [clang-diagnostic-error]
-        copyTree(other.root->left);
-                 ^~~~~~~~~~~~~~~~
-/home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp:101:47: note: passing argument to parameter 'other' here
-void ThreadedBST::copyTree(const ThreadedBST& other) {
-                                              ^
-/home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp:116:18: error: reference to type 'const ThreadedBST' could not bind to an lvalue of type 'ThreadedBST::Node *' [clang-diagnostic-error]
-        copyTree(other.root->right);
-                 ^~~~~~~~~~~~~~~~~
-/home/NETID/rubykaur/Ass5-1/ThreadedBST.cpp:101:47: note: passing argument to parameter 'other' here
-void ThreadedBST::copyTree(const ThreadedBST& other) {
-                                              ^
-Found compiler error(s).
+1 warning generated.
+1 warning generated.
+2 warnings generated.
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:27:13: warning: Value stored to 'parent' is never read [clang-analyzer-deadcode.DeadStores]
+            parent = current;
+            ^        ~~~~~~~
+/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:27:13: note: Value stored to 'parent' is never read
+            parent = current;
+            ^        ~~~~~~~
+Suppressed 1 warnings (1 in non-user code).
+Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
 *** running myprogram
 ./simplecompile.sh: line 28: ./myprogram: No such file or directory
 *** cleaning up, deleting myprogram
 rm: cannot remove 'myprogram': No such file or directory
-Thu Jun  1 12:14:12 PDT 2023
+Fri Jun  2 18:26:33 PDT 2023
+
