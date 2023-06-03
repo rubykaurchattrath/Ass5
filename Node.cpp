@@ -10,5 +10,5 @@ public:
     Node* right;
     bool isThread; // flag to distinguish threads
 
-    Node(int k) : key(k), left(nullptr), right(nullptr), rightThread(false) {}
+    Node(int k) : key(k), left(nullptr), right(nullptr), isThread(false) {}
 };
