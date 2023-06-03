@@ -19,6 +19,7 @@ public:
     void remove(int key);
     void display();
     void inorder();
+    Node* copyTree(Node* node);
 
 private:
     Node* findSuccessor(Node* node);
