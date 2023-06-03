@@ -21,7 +21,7 @@ Node* ThreadedBST::copyTree(Node* node) {
     }
 
     Node* newNode = new Node(node->key);
-    newNode->rightThread = node->rightThread;
+    newNode->isThread = node->isThread;
     newNode->left = copyTree(node->left);
     newNode->right = copyTree(node->right);
 
