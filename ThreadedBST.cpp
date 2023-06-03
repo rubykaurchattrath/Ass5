@@ -226,3 +226,12 @@ Node* ThreadedBST::findSuccessor(Node* node) {
 
     return current;
 }
+
+// Find the parent of the inorder successor of a node in the threaded binary search tree
+Node* ThreadedBST::findSuccessorParent(Node* node) {
+    Node* current = node->right;
+    while (current->left != node) {
+        current = current->left;
+    }
+    return current;
+}
