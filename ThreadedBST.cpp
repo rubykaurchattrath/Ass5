@@ -49,7 +49,7 @@ ThreadedBST::~ThreadedBST() {
 void ThreadedBST::insert(int key) {
     if (root == nullptr) {
         root = new Node(key);
-        root->rightThread = true;
+        root->isThread = true;
     } else {
         Node* newNode = new Node(key);
         Node* current = root;
@@ -62,19 +62,19 @@ void ThreadedBST::insert(int key) {
                 if (current->left == nullptr) {
                     current->left = newNode;
                     newNode->right = current;
-                    newNode->rightThread = true;
+                    newNode->isThread = true;
                     break;
                 } else {
                     current = current->left;
                 }
             } else if (key > current->key) {
-                if (!current->rightThread) {
+                if (!current->isThread) {
                     current = current->right;
                 } else {
                     newNode->right = current->right;
-                    newNode->rightThread = true;
+                    newNode->isThread = true;
                     current->right = newNode;
-                    current->rightThread = false;
+                    current->isThread = false;
                     break;
                 }
             } else {
@@ -96,7 +96,7 @@ void ThreadedBST::remove(int key) {
             parent = target;
             target = target->left;
         } else if (key > target->key) {
-            if (target->rightThread)
+            if (target->isThread)
                 return;
 
             parent = target;
@@ -116,7 +116,7 @@ void ThreadedBST::remove(int key) {
             root = nullptr;
         } else if (target == parent->left) {
             parent->left = nullptr;
-            parent->rightThread = true;
+            parent->isThread = true;
             delete target;
         } else {
             parent->right = target->right;
@@ -177,7 +177,7 @@ void ThreadedBST::display() {
     while (current != nullptr) {
         cout << current->key << " ";
 
-        if (!current->rightThread) {
+        if (!current->isThread) {
             current = current->right;
             while (current->left != nullptr)
                 current = current->left;
@@ -217,7 +217,7 @@ void ThreadedBST::inorder() {
 
 // Find the inorder successor of a node in the threaded binary search tree
 Node* ThreadedBST::findSuccessor(Node* node) {
-    if (node->rightThread)
+    if (node->isThread)
         return node->right;
 
     Node* current = node->right;
