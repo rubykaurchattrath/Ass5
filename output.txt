@@ -1,45 +1,57 @@
-Fri Jun  2 18:26:29 PDT 2023
+Fri Jun  2 20:23:18 PDT 2023
 *** compiling with clang++ to create an executable called myprogram
 clang version 14.0.6 (Red Hat 14.0.6-1.module+el8.7.0+1080+d88dc670)
 Target: x86_64-redhat-linux-gnu
 Thread model: posix
 InstalledDir: /usr/bin
 In file included from main.cpp:4:
-./ThreadedBST.cpp:24:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
+./ThreadedBST.cpp:56:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
         Node* parent = nullptr;
               ^
 1 warning generated.
-ThreadedBST.cpp:24:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
+ThreadedBST.cpp:56:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
         Node* parent = nullptr;
               ^
 1 warning generated.
-/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:9: multiple definition of `ThreadedBST::ThreadedBST()'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:9: first defined here
-/tmp/ThreadedBST-4a9aa9.o: In function `~ThreadedBST':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:12: multiple definition of `ThreadedBST::~ThreadedBST()'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:12: first defined here
-/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::insert(int)':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:17: multiple definition of `ThreadedBST::insert(int)'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:17: first defined here
-/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::remove(int)':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:57: multiple definition of `ThreadedBST::remove(int)'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:57: first defined here
-/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::findSuccessor(Node*)':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:187: multiple definition of `ThreadedBST::findSuccessor(Node*)'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:187: first defined here
-/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::display()':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:135: multiple definition of `ThreadedBST::display()'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:135: first defined here
-/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST::inorder()':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:161: multiple definition of `ThreadedBST::inorder()'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:161: first defined here
-/tmp/ThreadedBST-4a9aa9.o: In function `ThreadedBST':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:9: multiple definition of `ThreadedBST::ThreadedBST()'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:9: first defined here
-/tmp/ThreadedBST-4a9aa9.o: In function `~ThreadedBST':
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:12: multiple definition of `ThreadedBST::~ThreadedBST()'
-/tmp/main-4bcff3.o:/home/NETID/rubykaur/Ass5/./ThreadedBST.cpp:12: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:9: multiple definition of `ThreadedBST::ThreadedBST()'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:9: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `Node':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:12: multiple definition of `ThreadedBST::ThreadedBST(ThreadedBST const&)'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:12: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST::copyTree(Node*)':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:18: multiple definition of `ThreadedBST::copyTree(Node*)'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:18: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `~ThreadedBST':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:32: multiple definition of `ThreadedBST::~ThreadedBST()'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:32: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST::findSuccessor(Node*)':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:219: multiple definition of `ThreadedBST::findSuccessor(Node*)'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:219: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST::insert(int)':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:49: multiple definition of `ThreadedBST::insert(int)'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:49: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST::remove(int)':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:89: multiple definition of `ThreadedBST::remove(int)'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:89: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST::display()':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:167: multiple definition of `ThreadedBST::display()'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:167: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST::inorder()':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:193: multiple definition of `ThreadedBST::inorder()'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:193: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST::findSuccessorParent(Node*)':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:231: multiple definition of `ThreadedBST::findSuccessorParent(Node*)'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:231: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `ThreadedBST':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:9: multiple definition of `ThreadedBST::ThreadedBST()'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:9: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `Node':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:12: multiple definition of `ThreadedBST::ThreadedBST(ThreadedBST const&)'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:12: first defined here
+/tmp/ThreadedBST-774f6f.o: In function `~ThreadedBST':
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:32: multiple definition of `ThreadedBST::~ThreadedBST()'
+/tmp/main-a1560a.o:/home/NETID/rubykaur/Ass5-2/./ThreadedBST.cpp:32: first defined here
 clang-14: error: linker command failed with exit code 1 (use -v to see invocation)
 *** running clang-tidy using options from .clang-tidy
 LLVM (http://llvm.org/):
@@ -50,10 +62,10 @@ LLVM (http://llvm.org/):
 1 warning generated.
 1 warning generated.
 2 warnings generated.
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:27:13: warning: Value stored to 'parent' is never read [clang-analyzer-deadcode.DeadStores]
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:59:13: warning: Value stored to 'parent' is never read [clang-analyzer-deadcode.DeadStores]
             parent = current;
             ^        ~~~~~~~
-/home/NETID/rubykaur/Ass5/ThreadedBST.cpp:27:13: note: Value stored to 'parent' is never read
+/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:59:13: note: Value stored to 'parent' is never read
             parent = current;
             ^        ~~~~~~~
 Suppressed 1 warnings (1 in non-user code).
@@ -62,5 +74,4 @@ Use -header-filter=.* to display errors from all non-system headers. Use -system
 ./simplecompile.sh: line 28: ./myprogram: No such file or directory
 *** cleaning up, deleting myprogram
 rm: cannot remove 'myprogram': No such file or directory
-Fri Jun  2 18:26:33 PDT 2023
-
+Fri Jun  2 20:23:26 PDT 2023
