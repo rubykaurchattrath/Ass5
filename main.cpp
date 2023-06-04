@@ -40,7 +40,21 @@ using namespace std;
     tree.inorder();
     cout << "Expected: 2 3 5 6 7 8" << endl;
 
+
+    // Test inserting duplicate keys
+    tree.insert(7); // Already present, should be ignored
+    cout << "Displaying the tree with duplicate keys: ";
+    tree.display();
+    cout << "Expected: 2 3 5 6 7 8" << endl;
+
+    // Remove a key that is not in the tree
+    tree.remove(9); // Not present, should have no effect
+    cout << "Displaying the tree after removing a non-existent key: ";
+    tree.display();
+    cout << "Expected: 2 3 5 6 7 8" << endl;
+
     return 0;
+    
 }
 
 

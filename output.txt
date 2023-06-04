@@ -1,35 +1,25 @@
-Sat Jun  3 10:44:00 PDT 2023
+Sun Jun  4 16:43:14 PDT 2023
 *** compiling with clang++ to create an executable called myprogram
-clang version 14.0.6 (Red Hat 14.0.6-1.module+el8.7.0+1080+d88dc670)
-Target: x86_64-redhat-linux-gnu
+Apple clang version 13.1.6 (clang-1316.0.21.2.5)
+Target: arm64-apple-darwin21.4.0
 Thread model: posix
-InstalledDir: /usr/bin
-ThreadedBST.cpp:56:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+ThreadedBST.cpp:57:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
         Node* parent = nullptr;
               ^
 1 warning generated.
 *** running clang-tidy using options from .clang-tidy
-LLVM (http://llvm.org/):
-  LLVM version 14.0.6
-  Optimized build.
-  Default target: x86_64-redhat-linux-gnu
-  Host CPU: cascadelake
-1 warning generated.
-/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:59:13: warning: Value stored to 'parent' is never read [clang-analyzer-deadcode.DeadStores]
-            parent = current;
-            ^        ~~~~~~~
-/home/NETID/rubykaur/Ass5-2/ThreadedBST.cpp:59:13: note: Value stored to 'parent' is never read
-            parent = current;
-            ^        ~~~~~~~
+./simplecompile.sh: line 24: clang-tidy: command not found
+./simplecompile.sh: line 25: clang-tidy: command not found
 *** running myprogram
 Displaying the tree: 2 3 4 5 6 7 8 
 Expected: 2 3 4 5 6 7 8
 Inorder traversal: 2 3 4 5 6 7 8 
 Expected: 2 3 4 5 6 7 8
-Displaying the updated tree: 5 6 7 8 
+Displaying the updated tree: 2 3 4 5 6 7 8 
 Expected: 2 3 5 6 7 8
-Inorder traversal: 5 6 7 8 
+Inorder traversal: 2 3 4 5 6 7 8 
 Expected: 2 3 5 6 7 8
+./simplecompile.sh: line 28: 92773 Segmentation fault: 11  ./myprogram
 *** cleaning up, deleting myprogram
-Sat Jun  3 10:44:07 PDT 2023
-
+Sun Jun  4 16:43:16 PDT 2023

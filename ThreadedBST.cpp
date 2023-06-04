@@ -3,6 +3,7 @@
 
 #include "ThreadedBST.h"
 #include <iostream>
+
 using namespace std;
 
 // Constructor
@@ -85,83 +86,131 @@ void ThreadedBST::insert(int key) {
     }
 }
 
-// Remove a key from the threaded binary search tree
-void ThreadedBST::remove(int key) {
-    Node* target = root;
-    Node* parent = nullptr;
-    bool found = false;
+// Finds a node with the specified key in the threaded binary search tree.
+// Finds a node with the specified key in the threaded binary search tree.
+Node* ThreadedBST::find(Node* root, int key) {
+    if (root == nullptr)
+        return nullptr;
 
-    while (target != nullptr) {
-        if (key < target->key) {
-            parent = target;
-            target = target->left;
-        } else if (key > target->key) {
-            if (target->isThread)
-                return;
-
-            parent = target;
-            target = target->right;
+    Node* current = root;
+    while (true) {
+        if (current->key == key)
+            return current;
+        else if (key < current->key) {
+            if (current->isThread || current->left == nullptr)
+                return nullptr;
+            current = current->left;
         } else {
-            found = true;
-            break;
+            if (current->isThread || current->right == nullptr)
+                return nullptr;
+            current = current->right;
         }
-    }
-
-    if (!found)
-        return;
-
-    if (target->left == nullptr && target->right == nullptr) {
-        if (target == root) {
-            delete root;
-            root = nullptr;
-        } else if (target == parent->left) {
-            parent->left = nullptr;
-            parent->isThread = true;
-            delete target;
-        } else {
-            parent->right = target->right;
-            delete target;
-        }
-    } else if (target->left == nullptr) {
-        if (target == root) {
-            root = target->right;
-        } else if (target == parent->left) {
-            parent->left = target->right;
-        } else {
-            parent->right = target->right;
-        }
-        Node* successor = findSuccessor(target);
-        delete target;
-        successor->left = nullptr;
-    } else if (target->right == nullptr) {
-        if (target == root) {
-            root = target->left;
-        } else if (target == parent->left) {
-            parent->left = target->left;
-        } else {
-            parent->right = target->left;
-        }
-        delete target;
-    } else {
-        Node* successorParent = target;
-        Node* successor = target->right;
-
-        while (successor->left != nullptr) {
-            successorParent = successor;
-            successor = successor->left;
-        }
-
-        target->key = successor->key;
-
-        if (successorParent == target) {
-            successorParent->right = successor->right;
-        } else {
-            successorParent->left = successor->right;
-        }
-
-        delete successor;
     }
 }
+
+// Helper function to find the leftmost node in the subtree rooted at 'node'
+// Returns the leftmost (smallest) node in the threaded bst.
+Node* ThreadedBST::leftmost(Node* node) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    while (node->left != nullptr) {
+        node = node->left;
+    }
+
+    return node;
+}
+
+
+// Removes a node with the specified key from the threaded bst.
+void ThreadedBST::remove(int key) {
+    // Call the recursive remove function and update the root
+    root = remove(root, key);
+}
+
+// Recursively removes a node with the specified key from the threaded bst.
+Node* ThreadedBST::remove(Node*& root, int key) {
+    if (root == nullptr) {
+        return root;
+    }
+
+    // Find the node to remove
+    Node* node = find(root, key);
+    if (node == nullptr) {
+        return root;
+    }
+
+    if (node->left == nullptr && node->right == nullptr) {
+        // Case 1: Node has no children
+        if (node->isThread) {
+            // Special case: Root is the only node in the tree
+            delete node;
+            root = nullptr;
+        } else if (node->left != nullptr && node->left->isThread) {
+            // Update successor's left thread
+            node->left->left = nullptr;
+            node->left->isThread = true;
+
+            // Update the root if necessary
+            if (root == node)
+                root = node->left;
+
+            delete node;
+        } else if (node->right != nullptr && node->right->isThread) {
+            // Update predecessor's right thread
+            node->right->right = nullptr;
+            node->right->isThread = true;
+
+            // Update the root if necessary
+            if (root == node)
+                root = node->right;
+
+            delete node;
+        } else {
+            // Find the inorder successor of the node
+            Node* successor = leftmost(node->right);
+
+            // Replace the node's key with the successor's key
+            node->key = successor->key;
+
+            // Remove the successor node
+            remove(root, successor->key);
+        }
+    } else if (node->left == nullptr || node->right == nullptr) {
+        // Case 2: Node has one child
+        Node* child = (node->left != nullptr) ? node->left : node->right;
+
+        if (node->left != nullptr && node->left->isThread) {
+            // Update successor's left thread
+            child->left = nullptr;
+            child->isThread = true;
+        } else if (node->right != nullptr && node->right->isThread) {
+            // Update predecessor's right thread
+            child->right = nullptr;
+            child->isThread = true;
+        }
+
+        // Update the root if necessary
+        if (root == node)
+            root = child;
+
+        delete node;
+    } else {
+        // Case 3: Node has two children
+        // Find the inorder successor of the node
+        Node* successor = leftmost(node->right);
+
+        // Replace the node's key with the successor's key
+        node->key = successor->key;
+
+        // Remove the successor node
+        remove(node->right, successor->key);
+    }
+    return root;
+}
+
+
 
 // Display the threaded binary search tree in inorder traversal
 void ThreadedBST::display() {
