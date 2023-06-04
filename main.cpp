@@ -40,7 +40,26 @@ using namespace std;
     tree.inorder();
     cout << "Expected: 2 3 5 6 7 8" << endl;
 
+    // Test copying the tree
+    ThreadedBST treeCopy(tree);
+    cout << "Displaying the copied tree: ";
+    treeCopy.display();
+    cout << "Expected: 2 3 5 6 7 8" << endl;
+
+    // Test removing even numbers from the copied tree
+    treeCopy.remove(2);
+    treeCopy.remove(6);
+    cout << "Displaying the copied tree after removing even numbers: ";
+    treeCopy.display();
+    cout << "Expected: 3 5 7 8" << endl;
+
+    // Perform inorder traversal on the copied tree
+    cout << "Inorder traversal of the copied tree: ";
+    treeCopy.inorder();
+    cout << "Expected: 3 5 7 8" << endl;
+
     return 0;
 }
+
 
 
