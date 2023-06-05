@@ -1,25 +1,131 @@
-Sun Jun  4 16:43:14 PDT 2023
+Sun Jun  4 23:15:24 PDT 2023
 *** compiling with clang++ to create an executable called myprogram
-Apple clang version 13.1.6 (clang-1316.0.21.2.5)
-Target: arm64-apple-darwin21.4.0
+clang version 14.0.6 (Red Hat 14.0.6-1.module+el8.7.0+1080+d88dc670)
+Target: x86_64-redhat-linux-gnu
 Thread model: posix
-InstalledDir: /Library/Developer/CommandLineTools/usr/bin
-ThreadedBST.cpp:57:15: warning: variable 'parent' set but not used [-Wunused-but-set-variable]
-        Node* parent = nullptr;
-              ^
-1 warning generated.
+InstalledDir: /usr/bin
+main.cpp:13:5: error: use of undeclared identifier 'std'
+    std::cout << "Inorder traversal: ";
+    ^
+main.cpp:19:5: error: use of undeclared identifier 'std'
+    std::cout << "Inorder traversal after deletion: ";
+    ^
+2 errors generated.
 *** running clang-tidy using options from .clang-tidy
-./simplecompile.sh: line 24: clang-tidy: command not found
-./simplecompile.sh: line 25: clang-tidy: command not found
+LLVM (http://llvm.org/):
+  LLVM version 14.0.6
+  Optimized build.
+  Default target: x86_64-redhat-linux-gnu
+  Host CPU: cascadelake
+2 errors generated.
+Error while processing /home/NETID/rubykaur/Ass5-3/main.cpp.
+2 warnings and 2 errors generated.
+Error while processing /home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp.
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:91:31: warning: Access to field 'right' results in a dereference of a null pointer (loaded from variable 'parent') [clang-analyzer-core.NullDereference]
+                parent->right = current->right;
+                ~~~~~~        ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:55:9: note: Assuming the condition is false
+    if (root == nullptr)
+        ^~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:55:5: note: Taking false branch
+    if (root == nullptr)
+    ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:59:5: note: 'parent' initialized to a null pointer value
+    Node* parent = nullptr;
+    ^~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:62:5: note: Loop condition is true.  Entering loop body
+    while (current != nullptr) {
+    ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:63:13: note: Assuming 'value' is equal to field 'data'
+        if (value == current->data)
+            ^~~~~~~~~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:63:9: note: Taking true branch
+        if (value == current->data)
+        ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:64:13: note:  Execution continues on line 83
+            break;
+            ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:83:5: note: Taking false branch
+    if (current == nullptr)
+    ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:86:9: note: Assuming field 'isThreaded' is true
+    if (current->isThreaded) {
+        ^~~~~~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:86:5: note: Taking true branch
+    if (current->isThreaded) {
+    ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:87:13: note: Assuming the condition is true
+        if (current->left == nullptr) {
+            ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:87:9: note: Taking true branch
+        if (current->left == nullptr) {
+        ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:88:17: note: 'isLeftChild' is false
+            if (isLeftChild)
+                ^~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:88:13: note: Taking false branch
+            if (isLeftChild)
+            ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:91:31: note: Access to field 'right' results in a dereference of a null pointer (loaded from variable 'parent')
+                parent->right = current->right;
+                ~~~~~~        ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:98:31: warning: Access to field 'right' results in a dereference of a null pointer (loaded from variable 'parent') [clang-analyzer-core.NullDereference]
+                parent->right = successor;
+                ~~~~~~        ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:55:9: note: Assuming the condition is false
+    if (root == nullptr)
+        ^~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:55:5: note: Taking false branch
+    if (root == nullptr)
+    ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:59:5: note: 'parent' initialized to a null pointer value
+    Node* parent = nullptr;
+    ^~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:62:5: note: Loop condition is true.  Entering loop body
+    while (current != nullptr) {
+    ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:63:13: note: Assuming 'value' is equal to field 'data'
+        if (value == current->data)
+            ^~~~~~~~~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:63:9: note: Taking true branch
+        if (value == current->data)
+        ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:64:13: note:  Execution continues on line 83
+            break;
+            ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:83:5: note: Taking false branch
+    if (current == nullptr)
+    ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:86:9: note: Assuming field 'isThreaded' is true
+    if (current->isThreaded) {
+        ^~~~~~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:86:5: note: Taking true branch
+    if (current->isThreaded) {
+    ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:87:13: note: Assuming the condition is false
+        if (current->left == nullptr) {
+            ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:87:9: note: Taking false branch
+        if (current->left == nullptr) {
+        ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:95:17: note: 'isLeftChild' is false
+            if (isLeftChild)
+                ^~~~~~~~~~~
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:95:13: note: Taking false branch
+            if (isLeftChild)
+            ^
+/home/NETID/rubykaur/Ass5-3/ThreadedBST.cpp:98:31: note: Access to field 'right' results in a dereference of a null pointer (loaded from variable 'parent')
+                parent->right = successor;
+                ~~~~~~        ^
+/home/NETID/rubykaur/Ass5-3/main.cpp:13:5: error: use of undeclared identifier 'std' [clang-diagnostic-error]
+    std::cout << "Inorder traversal: ";
+    ^
+/home/NETID/rubykaur/Ass5-3/main.cpp:19:5: error: use of undeclared identifier 'std' [clang-diagnostic-error]
+    std::cout << "Inorder traversal after deletion: ";
+    ^
+Found compiler error(s).
 *** running myprogram
-Displaying the tree: 2 3 4 5 6 7 8 
-Expected: 2 3 4 5 6 7 8
-Inorder traversal: 2 3 4 5 6 7 8 
-Expected: 2 3 4 5 6 7 8
-Displaying the updated tree: 2 3 4 5 6 7 8 
-Expected: 2 3 5 6 7 8
-Inorder traversal: 2 3 4 5 6 7 8 
-Expected: 2 3 5 6 7 8
-./simplecompile.sh: line 28: 92773 Segmentation fault: 11  ./myprogram
+./simplecompile.sh: line 28: ./myprogram: No such file or directory
 *** cleaning up, deleting myprogram
-Sun Jun  4 16:43:16 PDT 2023
+rm: cannot remove 'myprogram': No such file or directory
+Sun Jun  4 23:15:25 PDT 2023
